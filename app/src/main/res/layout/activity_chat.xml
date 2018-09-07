@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+ >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:id="@+id/header"
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    >
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:src="@drawable/video"
+        android:id="@+id/video"
+        android:tint="@color/white"
+        />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/audio"
+        android:id="@+id/audio"
+        android:tint="@color/white"
+
+        />
+</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+
+        android:src="@drawable/send"
+        android:id="@+id/fab"
+        android:tint="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:fabSize="mini" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/fab"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Input"
+            android:id="@+id/input"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentLeft="true"
+        android:layout_above="@id/fab"
+        android:layout_below="@+id/header"
+        android:dividerHeight="16dp"
+        android:divider="@android:color/transparent"
+        android:id="@+id/list_of_messages"
+ android:layout_marginBottom="16dp"/>
+</RelativeLayout>
