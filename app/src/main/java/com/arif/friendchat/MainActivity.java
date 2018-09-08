@@ -18,8 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arif.friendchat.constant.AppData;
+import com.arif.friendchat.constant.Constant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +51,8 @@ Gson gson=new Gson();
 ListView user_list;
 List<User>users=new ArrayList<>();
     UserListAdapter userListAdapter;
+    public static  String Token;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,14 @@ List<User>users=new ArrayList<>();
         user_list=(ListView)findViewById(R.id.user_list);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("users");
+        Token=AppData.getData(Constant.Token,getApplicationContext());
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         auth = FirebaseAuth.getInstance();
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Home");
+        }
+       // mFirebaseDatabase=mFirebaseDatabase.child(Token);
 
         Log.e("auth",""+gson.toJson(auth.getUid()));
 
@@ -71,8 +82,6 @@ List<User>users=new ArrayList<>();
             }
         });
         auth = FirebaseAuth.getInstance();
-
-        //get current user
 
         getAllUer();
         initializer();
@@ -116,28 +125,55 @@ switch (item.getItemId())
         //respond to menu item selection
         return super.onOptionsItemSelected(item);
     }
+    String email;
 private void getAllUer()
 {
-    ValueEventListener eventListener = new ValueEventListener() {
+
+ email=AppData.getData(AppData.email,getApplicationContext());
+    mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
+
             users = new ArrayList();
-            for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                User user = ds.getValue(User.class);
-                users.add(user);
+            try {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    User user = ds.getValue(User.class);
+                    if(!user.email.equals(email))
+                    users.add(user);
 
-                Log.e("onDataChange",gson.toJson(users)+"\n") ;
+                    Log.e("onDataChange", ds+"\n"+gson.toJson(users) + "\n");
+                }
+                userListAdapter.SetData(users);
             }
-            userListAdapter.SetData(users);
-
+            catch ( Exception e)
+            {
+                userListAdapter.SetData(users);
+                Log.e("Exception--",""+e.getMessage());
+            }
         }
-
         @Override
         public void onCancelled(DatabaseError databaseError) {
 
         }
-    };
-    mFirebaseDatabase.addListenerForSingleValueEvent(eventListener);
+    });
+
+
+
+
+//    ValueEventListener eventListener = new ValueEventListener() {
+//        @Override
+//        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//        }
+//
+//        @Override
+//        public void onCancelled(DatabaseError databaseError) {
+//
+//        }
+//    };
+//    mFirebaseDatabase.addListenerForSingleValueEvent(eventListener);
+//
+
 
 
 }

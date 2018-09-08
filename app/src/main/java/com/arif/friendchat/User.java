@@ -12,7 +12,7 @@ import java.io.Serializable;
 @IgnoreExtraProperties
 public class User  implements Serializable{
 
-    public String password;
+
     public String email;
     public String token;
     public String name;

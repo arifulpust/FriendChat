@@ -14,12 +14,20 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arif.friendchat.constant.AppData;
+import com.arif.friendchat.constant.Constant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,6 +38,8 @@ public  static  String TAG="LoginActivity";
     private Button btnSignup, btnLogin, btnReset;
     String email;
 Gson gson=new Gson();
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +55,8 @@ Gson gson=new Gson();
         // set the view now
         setContentView(R.layout.activity_login);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference("users");
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -109,19 +119,90 @@ Gson gson=new Gson();
                                     }
                                 } else {
                                     Log.e("signInWithEmailAndPass",""+gson.toJson(task.getResult().getUser()));
-
                                     AppData.saveData(AppData.email,email,getApplicationContext());
-                                    AppData.saveData(AppData.Acess_Toten,task.getResult().getUser().getUid(),getApplicationContext());
-//                                    AppData.saveData(AppData.user_id,jsonObject.user_id+"",getApplicationContext());
-//                                    AppData.saveData(AppData.user_image,jsonObject.user_image+"",getApplicationContext())
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    AppData.saveData(AppData.Acess_Toten,   task.getResult().getUser().getUid(),getApplicationContext());
+                                    getToken();
+
                                 }
                             }
                         });
             }
         });
     }
+    private void getNewToken()
+    {
+        FirebaseMessaging.getInstance().subscribeToTopic("news")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String token = getString(R.string.msg_subscribed);
+                        Log.e("token",""+token);
+                        if (!task.isSuccessful()) {
 
+                            Toast.makeText(LoginActivity.this, getString(R.string.msg_subscribe_failed), Toast.LENGTH_SHORT).show();
+                        }else
+                        {
+
+                            getToken();
+
+                        }
+
+
+                    }
+                });
+    }
+    private void getToken()
+    {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+
+                        Log.e(TAG,"token-- "+ token);
+                        updateToken(token);
+
+                    }
+                });
+    }
+    String keyValue="" ;
+private void updateToken(final String token)
+{
+    mFirebaseDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            for (DataSnapshot ds : dataSnapshot.getChildren())
+            {
+                keyValue= ds.getKey().toString();
+
+                Log.e("ds",keyValue+"\n"+ds);
+            }
+            try {
+
+
+                mFirebaseDatabase.child(keyValue).child("token").setValue(token);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    });
+
+
+}
 }

@@ -151,11 +151,13 @@ String Uid;
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
+
         if (TextUtils.isEmpty(userId)) {
             userId = mFirebaseDatabase.push().getKey();
         }
 
         User user = new User(name,email, Uid,token);
+        AppData.saveData(AppData.Acess_Toten,userId,getApplicationContext());
 
         mFirebaseDatabase.child(userId).setValue(user);
 
@@ -166,38 +168,6 @@ String Uid;
     /**
      * User data change listener
      */
-    private void addUserChangeListener() {
-        // User data change listener
-        mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                // Check for null
-                if (user == null) {
-                    Log.e(TAG, "User data is null!");
-                    return;
-                }
-
-                Log.e(TAG, "User data is changed!" + user.token + ", " + user.email);
-
-                // Display newly updated name and email
-
-
-                // clear edit text
-                inputEmail.setText("");
-                inputPassword.setText("");
-
-                //   toggleButton();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.e(TAG, "Failed to read user", error.toException());
-            }
-        });
-    }
     @Override
     protected void onResume() {
         super.onResume();

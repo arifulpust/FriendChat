@@ -7,6 +7,7 @@ package com.arif.friendchat.constant;
 public class Constant {
     public static String FCM_TOKEN="key=AIzaSyCCNrhCeJcvOBp22shEO47A9dHC3HrKo20";
     public static int SPLASH_TIME=2000;
+    public static String Token;
     public static final String YOUTUBE_API_KEY = "AIzaSyDTFQyk0NH1n7w5PM7MenvgVSY8cmFnfT8";
     public static final String FCM_URL = "https://fcm.googleapis.com/fcm/send";
 

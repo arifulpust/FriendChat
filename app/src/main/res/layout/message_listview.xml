@@ -4,20 +4,90 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:orientation="horizontal">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+android:id="@+id/you_layout"
+    android:visibility="gone"
+    android:orientation="horizontal"
+    >
     <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
+        android:id="@+id/your_name"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+android:layout_marginRight="10dp"
+        android:layout_weight="2"
+        android:padding="6dp"
+        android:text=""
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textColor="@color/colorPrimary"
       />
-
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:layout_weight="5"
+    >
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="fill_parent"
+        android:id="@+id/your_message"
+        android:layout_width="wrap_content"
+
+        android:background="@drawable/bg_you_chat"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="20dp"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text=""
         android:textStyle="bold"
-        android:textColor="#000000" />
+        android:textColor="#FFFFFF" />
+</LinearLayout>
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_layout"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        >
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="5"
+            android:gravity="right"
+            >
+            <TextView
+                android:id="@+id/my_message"
+                android:layout_width="wrap_content"
+
+                android:background="@drawable/bg_you_chat"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:gravity="right"
+                android:padding="6dp"
+                android:text=""
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/my_name"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="16dp"
+
+            android:text=""
+
+            android:textColor="#000000"
+
+            />
+    </LinearLayout>
 </LinearLayout>
