@@ -5,25 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
->
+
+
+    >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/login_screen_holder"
         android:gravity="center"
+        android:id="@+id/root"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
 
         <ImageView
-            android:layout_width="@dimen/logo_w_h"
-            android:layout_height="@dimen/logo_w_h"
+            android:layout_width="160px"
+            android:layout_height="160px"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:src="@mipmap/ic_launcher" />
+            android:tint="@color/white"
+            android:src="@drawable/chat" />
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
             android:layout_height="wrap_content">
 
             <EditText
@@ -31,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name"
-
+                android:textSize="30px"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="@android:color/white" />
@@ -40,6 +47,9 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
             android:layout_height="wrap_content">
 
             <EditText
@@ -49,6 +59,7 @@
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
+                android:textSize="30px"
                 android:singleLine="true"
                 android:textColor="@android:color/white" />
 
@@ -56,6 +67,9 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
             android:layout_height="wrap_content">
 
             <EditText
@@ -64,7 +78,28 @@
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
                 android:hint="@string/hint_password"
-                android:imeActionId="@+id/login"
+                android:textSize="30px"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@android:color/white" />
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:hint="@string/hint_password_confirm"
+android:textSize="30px"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
@@ -78,21 +113,26 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorAccent"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/white"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            fontPath="fonts/AvenirNextBold.otf"
+            android:background="@drawable/background_btn"
             android:text="@string/action_sign_in_short"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_reset_password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="20px"
             android:background="@null"
             android:text="@string/btn_forgot_password"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent" />
+            fontPath="fonts/AvenirNextBold.otf"
+            android:textColor="@color/white" />
 
         <!-- Link to Login Screen -->
 
@@ -100,19 +140,20 @@
             android:id="@+id/sign_in_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="20px"
             android:background="@null"
+            fontPath="fonts/AvenirNextBold.otf"
             android:text="@string/btn_link_to_login"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+         />
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_gravity="center"
+
         android:visibility="gone" />
 </android.support.design.widget.CoordinatorLayout>

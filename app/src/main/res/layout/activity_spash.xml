@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SpashActivity">
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/common_full_open_on_phone"
-        android:tint="@color/colorPrimary"
-        android:layout_gravity="center"
+    android:id="@+id/root"
+    android:background="@drawable/login_screen_holder"
+    tools:context=".View.SpashActivity">
 
+    <RelativeLayout
+        android:layout_width="220px"
+        android:layout_height="220px"
+        android:layout_above="@+id/chat"
+        android:layout_centerHorizontal="true"
 
+        >
+        <ImageView
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:src="@drawable/chat"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:tint="@color/white"
+            />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50px"
+android:layout_marginTop="15px"
+        android:text="FriendChat"
+        fontPath="fonts/AvenirNextBold.otf"
+        android:textColor="@color/white"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         />
 
-</LinearLayout>
+
+</RelativeLayout>

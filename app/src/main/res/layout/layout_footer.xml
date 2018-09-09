@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlt_footer_root"
+    android:layout_marginTop="5px"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:id="@+id/view_footer"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/lnl_footer_parent"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rlt_footer_home"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:clickable="true"
+               >
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/btn_footer_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@color/transparent"
+
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:stateListAnimator="@null" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="46px"
+                    android:layout_height="46px"
+                    android:layout_marginLeft="62px"
+                    android:layout_marginTop="19px"
+                    android:background="@color/transparent"
+                    android:scaleType="fitXY"
+                    android:tint="@color/colorPrimary"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/timeLineIcon"
+                    app:srcCompat="@drawable/ic_img_footer_home_off"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="60px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="20px"
+                    android:gravity="center"
+                    android:id="@+id/timeLineText"
+                    android:maxLines="1"
+                    android:tag="20"
+
+                    android:text="home  "
+                    android:textColor="@drawable/footer_text_selector"
+                    android:textSize="20px"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlt_footer_chat"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/btn_footer_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:stateListAnimator="@null" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="49px"
+                    android:layout_height="47px"
+                    android:layout_marginLeft="47px"
+                    android:id="@+id/chatIcon"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="19px"
+                    android:background="@color/transparent"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_img_footer_chat_off"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <TextView
+                    android:id="@+id/txt_unread_message"
+                    android:layout_width="46px"
+                    android:layout_height="46px"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="73px"
+                    android:layout_marginTop="5px"
+                    android:background="@drawable/shape_footer_badge_circle"
+                    android:contentDescription=""
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:tag="15"
+                    android:text="New"
+                    android:textColor="@color/white"
+                    android:textSize="15px"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="60px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="7px"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:id="@+id/footer_chat_text_selector"
+                    android:tag="20"
+                    android:text="  Chat"
+                    android:textColor="@drawable/footer_text_selector"
+                    android:textSize="20px"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/rlt_footer_alert"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/btn_footer_alert"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:stateListAnimator="@null" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="48px"
+                    android:layout_height="54px"
+                    android:layout_marginLeft="57px"
+                    android:layout_marginTop="13px"
+                    android:background="@color/transparent"
+                    android:id="@+id/alertIcon"
+                    android:scaleType="fitXY"
+
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/ic_img_footer_alert_off"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <TextView
+                    android:id="@+id/txt_new_alert"
+                    android:layout_width="46px"
+                    android:layout_height="46px"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="80px"
+                    android:layout_marginTop="5px"
+                    android:background="@drawable/shape_footer_badge_circle"
+                    android:contentDescription=""
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:tag="15"
+                    android:text="New"
+                    android:textColor="@color/white"
+                    android:textSize="15px"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="60px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="14px"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:tag="20"
+                    android:id="@+id/footer_atert_text_selector"
+                    android:text="Notification"
+                    android:textColor="@drawable/footer_text_selector"
+                    android:textSize="20px"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlt_footer_mypage"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/btn_footer_mypage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:stateListAnimator="@null" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="52px"
+                    android:layout_height="52px"
+                    android:layout_marginLeft="36px"
+                    android:layout_marginTop="13px"
+                    android:layout_weight="1"
+                    android:id="@+id/myPageIcon"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/transparent"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_img_footer_mypage_off"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="60px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="23px"
+                    android:gravity="center"
+                    android:id="@+id/footer_mypage_text_selector"
+                    android:maxLines="1"
+                    android:layout_centerHorizontal="true"
+                    android:tag="20"
+                    android:text="Profile"
+                    android:textColor="@drawable/footer_text_selector"
+                    android:textSize="20px"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

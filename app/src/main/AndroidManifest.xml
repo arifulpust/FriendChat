@@ -9,32 +9,35 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".Utils.MyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/chat"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SpashActivity">
+        <activity android:name=".View.SpashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".View.LoginActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".View.MainActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".ResetPasswordActivity"></activity>
-        <service android:name=".FirebaseMessagingService">
+        <activity android:name=".View.SignupActivity" />
+        <activity android:name=".View.ChatActivity" />
+        <activity android:name=".View.ResetPasswordActivity" />
+
+        <service android:name=".Service.FirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
+        <activity android:name=".View.SettingActivity"></activity>
     </application>
 
 </manifest>
