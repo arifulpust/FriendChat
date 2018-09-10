@@ -1,13 +1,77 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:id="@+id/root"
     tools:context="com.arif.friendchat.Fragment.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_screen_holder"
+    android:id="@+id/odd"
+    android:visibility="visible"
+    >
+    <RelativeLayout
+        android:layout_width="220px"
+        android:layout_height="220px"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+        >
+        <ImageView
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:src="@drawable/chat"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:tint="@color/white"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/bg_login"
+     android:id="@+id/event"
+        android:visibility="gone"
+        >
+        <RelativeLayout
+            android:layout_width="220px"
+            android:layout_height="220px"
 
-</FrameLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+
+            >
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:src="@drawable/chat"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:tint="@color/white"
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50px"
+        android:layout_marginTop="15px"
+        android:text="FriendChat"
+        fontPath="fonts/AvenirNextBold.otf"
+        android:textColor="@color/white"
+     android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100px"
+        />
+</RelativeLayout>

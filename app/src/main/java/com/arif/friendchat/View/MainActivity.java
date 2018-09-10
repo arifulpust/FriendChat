@@ -125,6 +125,15 @@ List<User>users=new ArrayList<>();
         CorrectSizeUtil.getInstance(this).correctSize(findViewById(R.id.root));
         unbinder= ButterKnife.bind(this);
         clickFooter(1);
+        //   pager.setPageTransformer(false, new NoPageTransformer());
+//        pager.setPageTransformer(true, new ViewPager.PageTransformer() {
+//            @Override
+//            public void transformPage(@NonNull View page, float position) {
+//
+//                Log.e("transformPage",position+"");
+//                page.setRotationY(position * -30);
+//            }
+//        });
       //  toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        auth = FirebaseAuth.getInstance();
 //        setSupportActionBar(toolbar);
