@@ -65,7 +65,7 @@ public void SetData(List<ChatMessage> messages)
        {
            my_layout.setVisibility(View.VISIBLE);
            you_layout.setVisibility(View.GONE);
-           my_name.setText(" "+messages.get(i).email);
+         //  my_name.setText(" ");
            my_message.setText(messages.get(i).message);
        }else
        {

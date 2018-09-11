@@ -30,7 +30,7 @@
             android:textStyle="bold" />
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/btn_header_keywe"
+            android:id="@+id/btn_setting"
             android:layout_width="50px"
             android:layout_height="50px"
             android:layout_alignParentRight="true"

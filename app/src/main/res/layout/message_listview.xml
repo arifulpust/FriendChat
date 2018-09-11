@@ -2,31 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="10px"
     android:orientation="horizontal">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="10px"
 android:id="@+id/you_layout"
     android:visibility="gone"
     android:orientation="horizontal"
     >
     <TextView
         android:id="@+id/your_name"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-android:layout_marginRight="10dp"
-        android:layout_weight="2"
-        android:padding="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="80px"
+android:layout_marginRight="10px"
+
+      android:paddingLeft="10px"
+        android:textSize="55px"
         android:text=""
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:layout_gravity="center|left"
+        android:gravity="center|left"
         android:textColor="@color/colorPrimary"
       />
 <LinearLayout
     android:layout_width="0dp"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:layout_weight="5"
     >
     <TextView
@@ -36,11 +37,11 @@ android:layout_marginRight="10dp"
         android:background="@drawable/bg_you_chat"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="20dp"
+        android:textSize="50px"
         android:gravity="center"
-        android:padding="6dp"
-        android:text=""
-        android:textStyle="bold"
+        android:padding="10px"
+        android:text="qsq"
+
         android:textColor="#FFFFFF" />
 </LinearLayout>
 </LinearLayout>
@@ -50,14 +51,15 @@ android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/my_layout"
-        android:layout_margin="5dp"
+        android:layout_margin="10px"
         android:orientation="horizontal"
+        android:visibility="gone"
         >
 
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_weight="5"
             android:gravity="right"
             >
@@ -65,24 +67,24 @@ android:layout_marginRight="10dp"
                 android:id="@+id/my_message"
                 android:layout_width="wrap_content"
 
-                android:background="@drawable/bg_you_chat"
+                android:background="@drawable/bg_my_chat"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="20dp"
+                android:textSize="50px"
                 android:gravity="right"
-                android:padding="6dp"
-                android:text=""
-                android:textStyle="bold"
+                android:padding="10px"
+                android:text="sq    wsq "
+
                 android:textColor="#FFFFFF" />
         </LinearLayout>
         <TextView
             android:id="@+id/my_name"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="80px"
+            android:layout_marginLeft="10px"
+          android:visibility="gone"
             android:gravity="center"
-            android:textSize="16dp"
+            android:textSize="45px"
 
             android:text=""
 

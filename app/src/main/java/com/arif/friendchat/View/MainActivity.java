@@ -86,7 +86,7 @@ List<User>users=new ArrayList<>();
     public static Drawable background = (Drawable) ColorTheme.makeGradientColor(ColorTheme.getColor("#80DEEA"),ColorTheme.getColor("#006064"));
     private String mCurrentFragmentTag = "";
     private ArrayList<String> mArrFragmentTag = new ArrayList<>();
-    Toolbar toolbar;
+
 
     @BindView(R.id.txt_header_title) TextView txt_header_title;
     @BindView(R.id.rlt_footer_home)
@@ -191,6 +191,11 @@ List<User>users=new ArrayList<>();
         super.onDestroy();
         unbinder.unbind();
     }
+    @OnClick(R.id.btn_setting)
+    public void setting()
+    {
+        signOut();
+    }
     @OnClick(R.id.btn_footer_home)
     public void showHomeFragment() {
         clickFooter(FRAGMENT_HOME);
@@ -201,7 +206,6 @@ List<User>users=new ArrayList<>();
         clickFooter(FRAGMENT_CHAT);
 //        setVisibleForUnreadMessageView(false);
     }
-
     @OnClick(R.id.btn_footer_alert)
     public void showAlertFragment() {
         clickFooter(FRAGMENT_ALERT);
@@ -235,9 +239,9 @@ List<User>users=new ArrayList<>();
 
             switch (fragment) {
                 case FRAGMENT_HOME:
-                    showFragment(FRAGMENT_CHAT);
+
                     newFragment = new HomeFragment();
-                    newFragment.setArguments(new Bundle());
+
                     break;
                 case FRAGMENT_CHAT:
                     newFragment = new MessageListFragment();

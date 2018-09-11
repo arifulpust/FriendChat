@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import com.arif.friendchat.Adapter.ChatAdapter;
 import com.arif.friendchat.Entity.ChatMessage;
+import com.arif.friendchat.Entity.Data;
+import com.arif.friendchat.Entity.FCMPushMessage;
 import com.arif.friendchat.R;
 import com.arif.friendchat.Entity.User;
+import com.arif.friendchat.Utils.CorrectSizeUtil;
 import com.arif.friendchat.constant.AppData;
 import com.arif.friendchat.constant.Constant;
 import com.arif.friendchat.Interface.DataController;
@@ -37,6 +40,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 public class ChatActivity extends AppCompatActivity implements DataController{
 RemoteDataController remoteDataController;
 ImageView audio,video;
@@ -51,10 +58,13 @@ ImageView audio,video;
     List<ChatMessage>messages=new ArrayList<>();
     Gson gson=new Gson();
     String email;
+    Unbinder unbinder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        unbinder= ButterKnife.bind(this);
+        CorrectSizeUtil.getInstance(this).correctSize(findViewById(R.id.root));
         audio=(ImageView)findViewById(R.id.audio);
         video=(ImageView)findViewById(R.id.video);
         message = (EditText)findViewById(R.id.input);
@@ -65,7 +75,7 @@ ImageView audio,video;
         list_of_messages.setHasFixedSize(true);
         list_of_messages.setLayoutManager(linearLayoutManager);
         initializer();
-        messageAdapter=new ChatAdapter(getApplicationContext(), messages,email);
+        messageAdapter=new ChatAdapter(this, messages,user.name,email);
         list_of_messages.setAdapter(messageAdapter);
       //  mUserId = firebaseRef.getAuth().getUid();
 Log.e("user",""+gson.toJson(user));
@@ -99,6 +109,35 @@ Log.e("user",""+gson.toJson(user));
         chatMessage_2 = mFirebaseInstance.getReference(Constant.FireBase.KEY_CHAT).child(Constant.FireBase.KEY_ROOM_MESSAGES).child(user.Uid);
         getData();
     }
+    @OnClick(R.id.video)
+    public void videoCall()
+    {
+        RemoteDataController remoteDataController=new RemoteDataController(this,getApplicationContext());
+
+        FCMPushMessage fcmPushMessage=new FCMPushMessage();
+        fcmPushMessage.to=user.token;
+ Data data=new Data();
+ data.message="hi am calling you";
+ data.type="video_call";
+        fcmPushMessage.data= data;
+        Log.e("FCMPushMessage",""+gson.toJson(fcmPushMessage));
+        remoteDataController.FCMPushMessage(Constant.FCM_URL,fcmPushMessage,100);
+    }
+    @OnClick(R.id.audio)
+    public void audioCall()
+    {
+        RemoteDataController remoteDataController=new RemoteDataController(this,getApplicationContext());
+
+        FCMPushMessage fcmPushMessage=new FCMPushMessage();
+        fcmPushMessage.to=user.token;
+        Data data=new Data();
+        data.message="hi am calling you";
+        data.type="audio_call";
+        fcmPushMessage.data= data;
+        Log.e("FCMPushMessage",""+gson.toJson(fcmPushMessage));
+        remoteDataController.FCMPushMessage(Constant.FCM_URL,fcmPushMessage,100);
+    }
+    //audio
 private void createChatMessage()
 {
 
@@ -139,15 +178,15 @@ Log.e("values",""+values);
 
 
 }
-    Map<String, String> params;
 
     @Override
     public void DataReceivedFromDataController(String response, int tag) {
-
+Log.e("DataReceivedFromData",""+response);
     }
 
     @Override
     public void errorReceivedFromDataController(String error, int tag) {
+        Log.e("errorReceivedF",""+error);
 
     }
 private void getData()
@@ -203,7 +242,14 @@ private void getData()
 
 
 }
-private void loadData(DataSnapshot dataSnapshot )
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    private void loadData(DataSnapshot dataSnapshot )
 {
     messages = new ArrayList();
     try {
@@ -219,6 +265,7 @@ private void loadData(DataSnapshot dataSnapshot )
         Log.e("Exception mess",""+e.getMessage());
     }
     messageAdapter.SetData(messages);
+    if(messages.size()>0)
     list_of_messages.smoothScrollToPosition(messages.size()-1);
 }
 

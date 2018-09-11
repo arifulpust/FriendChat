@@ -2,48 +2,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
  >
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="120px"
     android:id="@+id/header"
     android:orientation="horizontal"
     android:background="@color/colorPrimary"
 
     >
     <ImageView
-        android:layout_width="24dp"
-        android:layout_height="20dp"
-    android:layout_marginLeft="10dp"
+        android:layout_width="120px"
+        android:layout_height="wrap_content"
+
         android:layout_alignParentLeft="true"
-        android:src="@drawable/back"
+        android:src="@drawable/btn_back"
         android:onClick="Back"
+        android:foreground="?android:attr/selectableItemBackground"
+
         android:id="@+id/back"
         android:layout_centerVertical="true"
         android:tint="@color/white"
         />
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:padding="10px"
         android:src="@drawable/video"
         android:id="@+id/video"
-
+        android:foreground="?android:attr/selectableItemBackground"
+android:onClick="video"
         android:tint="@color/white"
         />
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_toRightOf="@id/video"
+        android:padding="10px"
         android:src="@drawable/audio"
         android:id="@+id/audio"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="video"
+
         android:layout_centerVertical="true"
         android:tint="@color/white"
 
@@ -53,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
 
         android:src="@drawable/send"
         android:id="@+id/fab"
@@ -61,20 +70,18 @@
         android:layout_alignParentRight="true"
         app:fabSize="mini" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/fab"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true">
+
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Input"
+            android:layout_toLeftOf="@id/fab"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
             android:id="@+id/input"
             />
-    </android.support.design.widget.TextInputLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -83,8 +90,7 @@
         android:layout_alignParentLeft="true"
         android:layout_above="@id/fab"
         android:layout_below="@+id/header"
-        android:dividerHeight="16dp"
-        android:divider="@android:color/transparent"
+
         android:id="@+id/list_of_messages"
- android:layout_marginBottom="16dp"/>
+ android:layout_marginBottom="16px"/>
 </RelativeLayout>

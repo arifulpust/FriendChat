@@ -9,6 +9,7 @@
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
     <color name="bg_main">#428bca</color>
+    <color name="text_color">#122124</color>
     <color name="transparent">#00000000</color>
     <color name="gradient_strong">#80AAAAAA</color>
     <color name="gray_bold">#7b7a7a</color>
