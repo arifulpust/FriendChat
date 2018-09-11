@@ -32,7 +32,6 @@ public class RemoteDataController {
     private Context context;
     RequestQueue requestQueue;
     public RemoteDataController(DataController dataController, Context context){
-
         this.dataController= dataController;
         this.context = context;
     }
@@ -112,11 +111,6 @@ Log.e("real response",""+response);
                 public Map<String, String> getHeaders() throws AuthFailureError {
 
                     Map<String, String> headers = new HashMap<>();
-
-                        //headers.put("Content-Type", "application/json");
-                  //  headers.put("Authorization", API.OAUTH_TOKEN_PREFIX+ AppData.getData(AppData.Acess_Toten,context));
-                  //  headers.put("Authorization", AppData.getData(AppData.Acess_Toten,context));
-                    headers.put("key", "123456654321");
                     Log.e("headers",""+headers+"  "+AppData.getData(AppData.Acess_Toten,context));
 
                     return headers;
@@ -128,26 +122,38 @@ Log.e("real response",""+response);
 
     public void FCMPushMessage(String url, final FCMPushMessage fcmPushMessage, final int tag){
 
-        JSONObject jsonObject =new JSONObject();
-
+        JSONObject jsonObject=null ;
         Gson gson=new Gson();
+        String data=gson.toJson(fcmPushMessage);
 
+Log.e("data",""+data);
         try {
-            jsonObject.put("to",fcmPushMessage.to);
-            jsonObject.put("data",gson.toJson(fcmPushMessage.data));
-Log.e("FCMPushMessage",""+jsonObject);
+            jsonObject = new JSONObject(data);
+
+
         }
         catch (Exception e)
         {
             Log.e("Exception",""+e.getMessage());
         }
-
+        Log.e("FCMPushMessage",""+jsonObject);
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>()
         {
             public void onResponse(JSONObject response) {
-                dataController.DataReceivedFromDataController(response.toString(),tag);
-                Log.e("response",""+response);
+                try {
+                    if (response.getInt("success") == 1)
+                        dataController.DataReceivedFromDataController("success", tag);
+                    else
+                    {
 
+                    }
+                    Log.e("response", "" + response);
+                }
+                catch (Exception e)
+                {
+                    dataController.errorReceivedFromDataController("fail",tag);
+
+                }
             }
         },
                 new Response.ErrorListener() {
@@ -169,7 +175,7 @@ Log.e("FCMPushMessage",""+jsonObject);
                 headers.put("Authorization", Constant.FCM_TOKEN);
                 //  headers.put("Authorization", AppData.getData(AppData.Acess_Toten,context));
             //    headers.put("key", "123456654321");
-                Log.e("headers",""+headers+"  "+AppData.getData(AppData.Acess_Toten,context));
+                Log.e("headers",""+headers+"  ");
 
                 return headers;
             }
