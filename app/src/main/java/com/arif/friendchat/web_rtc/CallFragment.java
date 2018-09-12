@@ -21,6 +21,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.arif.friendchat.R;
+import com.arif.friendchat.constant.Constant;
 
 import org.webrtc.RendererCommon.ScalingType;
 
@@ -115,7 +116,7 @@ public class CallFragment extends Fragment {
         boolean captureSliderEnabled = false;
         Bundle args = getArguments();
         if (args != null) {
-            String contactName = args.getString(CallActivity.EXTRA_ROOMID);
+            String contactName = args.getString(Constant.NAME);
             contactView.setText(contactName);
             videoCallEnabled = args.getBoolean(CallActivity.EXTRA_VIDEO_CALL, true);
             captureSliderEnabled = videoCallEnabled

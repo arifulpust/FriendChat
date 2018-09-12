@@ -13,9 +13,8 @@ package com.arif.friendchat.web_rtc;
 import android.os.Handler;
 import android.util.Log;
 
-
 import com.arif.friendchat.web_rtc.util.AsyncHttpURLConnection;
-
+import com.arif.friendchat.web_rtc.util.AsyncHttpURLConnection.AsyncHttpEvents;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -222,7 +221,7 @@ public class WebSocketChannelClient {
         String postUrl = postServerUrl + "/" + roomID + "/" + clientID;
         Log.d(TAG, "WS " + method + " : " + postUrl + " : " + message);
         AsyncHttpURLConnection httpConnection =
-                new AsyncHttpURLConnection(method, postUrl, message, new AsyncHttpURLConnection.AsyncHttpEvents() {
+                new AsyncHttpURLConnection(method, postUrl, message, new AsyncHttpEvents() {
                     @Override
                     public void onHttpError(String errorMessage) {
                         reportError("WS " + method + " error: " + errorMessage);

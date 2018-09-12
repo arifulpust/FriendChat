@@ -12,21 +12,22 @@ package com.arif.friendchat.web_rtc;
 
 import android.util.Log;
 
-import com.arif.friendchat.web_rtc.util.AsyncHttpURLConnection;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.webrtc.IceCandidate;
-import org.webrtc.PeerConnection;
-import org.webrtc.SessionDescription;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Scanner;
+
+import com.arif.friendchat.web_rtc.AppRTCClient.SignalingParameters;
+import com.arif.friendchat.web_rtc.util.AsyncHttpURLConnection;
+import com.arif.friendchat.web_rtc.util.AsyncHttpURLConnection.AsyncHttpEvents;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.webrtc.IceCandidate;
+import org.webrtc.PeerConnection;
+import org.webrtc.SessionDescription;
 
 /**
  * AsyncTask that converts an AppRTC room URL into the set of signaling
@@ -47,17 +48,12 @@ public class RoomParametersFetcher {
          * Callback fired once the room's signaling parameters
          * SignalingParameters are extracted.
          */
-        void onSignalingParametersReady(final AppRTCClient.SignalingParameters params);
-        void onSignalingParametersError(final String description);
-
-//        void onSignalingParametersReady(final AppRTCClient.SignalingParameters params);
-//
-//        void onSignalingParametersReady(AppRTCClient.SignalingParameters params);
+        void onSignalingParametersReady(final SignalingParameters params);
 
         /**
          * Callback for room parameters extraction error.
          */
-
+        void onSignalingParametersError(final String description);
     }
 
     public RoomParametersFetcher(
@@ -70,7 +66,7 @@ public class RoomParametersFetcher {
     public void makeRequest() {
         Log.d(TAG, "Connecting to room: " + roomUrl);
         AsyncHttpURLConnection httpConnection =
-                new AsyncHttpURLConnection("POST", roomUrl, roomMessage, new AsyncHttpURLConnection.AsyncHttpEvents() {
+                new AsyncHttpURLConnection("POST", roomUrl, roomMessage, new AsyncHttpEvents() {
                     @Override
                     public void onHttpError(String errorMessage) {
                         Log.e(TAG, "Room connection error: " + errorMessage);
@@ -152,7 +148,7 @@ public class RoomParametersFetcher {
                 }
             }
 
-            AppRTCClient.SignalingParameters params = new AppRTCClient.SignalingParameters(
+            SignalingParameters params = new SignalingParameters(
                     iceServers, initiator, clientId, wssUrl, wssPostUrl, offerSdp, iceCandidates);
             events.onSignalingParametersReady(params);
         } catch (JSONException e) {

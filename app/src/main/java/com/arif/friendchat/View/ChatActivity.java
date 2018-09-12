@@ -194,19 +194,19 @@ Log.e("values",""+values);
         if(tag==100)
         {
           //  Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
-            Intent intent=new Intent(ChatActivity.this,ConnectActivity.class);
+            Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
             intent.putExtra(Constant.CHAT_TYPE,Constant.AUDION_CHAT);
 
-            intent.putExtra(Constant.ROOMID,my_info.Uid);
-            intent.putExtra(Constant.FROM,"me");
+            intent.putExtra(Constant.ROOMID,user.Uid);
+            intent.putExtra(Constant.FROM,my_info.name);
             startActivity(intent);
         }else if(tag==101)
         {
            // Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
-            Intent intent=new Intent(ChatActivity.this,ConnectActivity.class);
+            Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
             intent.putExtra(Constant.CHAT_TYPE,Constant.VIDEO_CHAT);
-            intent.putExtra(Constant.ROOMID,my_info.Uid);
-            intent.putExtra(Constant.FROM,"me");
+            intent.putExtra(Constant.ROOMID,user.Uid);
+            intent.putExtra(Constant.FROM,my_info.name);
             startActivity(intent);
         }
 

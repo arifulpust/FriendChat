@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.arif.friendchat.Entity.Data;
 import com.arif.friendchat.Entity.FCMPushMessage;
+import com.arif.friendchat.Entity.User;
 import com.arif.friendchat.R;
 import com.arif.friendchat.Receiver.InlineReplyReceiver;
 import com.arif.friendchat.View.AudionVideoChattingActivity;
@@ -46,17 +47,24 @@ Gson gson=new Gson();
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
             try
             {
-              //  Map<String, String> params = remoteMessage.getData();
+                Data data=new Data();
+                Map<String, String> params = remoteMessage.getData();
                 JSONObject object = new JSONObject(remoteMessage.getData());
-                Data fcmPushMessage=gson.fromJson(object.toString(),Data.class);
+                String user_str=object.getString("user");
+                String message=object.getString("message");
+                String type=object.getString("type");
+                User user=gson.fromJson(user_str,User.class);
+                data.user=user;
+                data.type=type;
+                data.message=message;
                 Log.e("JSON_OBJECT", object.toString());
-                Log.e("fcmPushMessage", gson.toJson(fcmPushMessage));
+                Log.e("fcmPushMessage", gson.toJson(data));
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    postNormalNotification(fcmPushMessage, 1);
+                    postNormalNotification(data, 1);
                 } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                    postHistoryNotification( fcmPushMessage, 1, false);
+                    postHistoryNotification( data, 1, false);
                 } else {
-                    postHistoryNotification( fcmPushMessage, 1, true);
+                    postHistoryNotification( data, 1, true);
                 }
 
             } catch (Exception e) {
@@ -65,9 +73,16 @@ Gson gson=new Gson();
         }
     }
 
-    private PendingIntent getClickIntent(String room) {
-        Intent intent = new Intent(this, PushActivity.class);
-        intent.putExtra(PushActivity.class.getSimpleName(), room);
+    private PendingIntent getClickIntent(Data data) {
+        Intent intent = new Intent(this, AudionVideoChattingActivity.class);
+        intent.putExtra(Constant.ROOMID, data.user.Uid);
+
+        intent.putExtra(Constant.CHAT_TYPE, data.type);
+        intent.putExtra(Constant.FROM, data.user.name);
+
+        intent.putExtra(InlineReplyReceiver.KEY_MESSAGE_ID, data.message);
+
+        //intent.putExtra(PushActivity.class.getSimpleName(), room);
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         return pIntent;
 
@@ -106,6 +121,7 @@ Gson gson=new Gson();
         Intent intent = new Intent(this, AudionVideoChattingActivity.class);
         //intent.setAction(Constant.ROOMID);
         intent.putExtra(Constant.ROOMID, data.user.Uid);
+
         intent.putExtra(Constant.CHAT_TYPE, data.type);
         intent.putExtra(Constant.FROM, data.user.name);
 
@@ -122,7 +138,7 @@ Gson gson=new Gson();
 
                 .setContentTitle(data.type)
                 .setContentText(data.message)
-                .setContentIntent(getClickIntent(""))
+                .setContentIntent(getClickIntent(data))
                 .setStyle(ibs)
 //                .setStyle(new NotificationCompat.BigTextStyle())
                 .setColor(ContextCompat.getColor(this,R.color.colorPrimary))

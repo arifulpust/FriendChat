@@ -171,32 +171,32 @@ public class SettingsActivity extends Activity implements OnSharedPreferenceChan
 
         // Disable forcing WebRTC based AEC so it won't affect our value.
         // Otherwise, if it was enabled, isAcousticEchoCancelerSupported would always return false.
-//        WebRtcAudioUtils.setWebRtcBasedAcousticEchoCanceler(false);
-//        if (!WebRtcAudioUtils.isAcousticEchoCancelerSupported()) {
-//            Preference disableBuiltInAECPreference =
-//                    settingsFragment.findPreference(keyprefDisableBuiltInAEC);
-//
-//            disableBuiltInAECPreference.setSummary(getString(R.string.pref_built_in_aec_not_available));
-//            disableBuiltInAECPreference.setEnabled(false);
-//        }
-//
-//        WebRtcAudioUtils.setWebRtcBasedAutomaticGainControl(false);
-//        if (!WebRtcAudioUtils.isAutomaticGainControlSupported()) {
-//            Preference disableBuiltInAGCPreference =
-//                    settingsFragment.findPreference(keyprefDisableBuiltInAGC);
-//
-//            disableBuiltInAGCPreference.setSummary(getString(R.string.pref_built_in_agc_not_available));
-//            disableBuiltInAGCPreference.setEnabled(false);
-//        }
-//
-//        WebRtcAudioUtils.setWebRtcBasedNoiseSuppressor(false);
-//        if (!WebRtcAudioUtils.isNoiseSuppressorSupported()) {
-//            Preference disableBuiltInNSPreference =
-//                    settingsFragment.findPreference(keyprefDisableBuiltInNS);
-//
-//            disableBuiltInNSPreference.setSummary(getString(R.string.pref_built_in_ns_not_available));
-//            disableBuiltInNSPreference.setEnabled(false);
-//        }
+        WebRtcAudioUtils.setWebRtcBasedAcousticEchoCanceler(false);
+        if (!WebRtcAudioUtils.isAcousticEchoCancelerSupported()) {
+            Preference disableBuiltInAECPreference =
+                    settingsFragment.findPreference(keyprefDisableBuiltInAEC);
+
+            disableBuiltInAECPreference.setSummary(getString(R.string.pref_built_in_aec_not_available));
+            disableBuiltInAECPreference.setEnabled(false);
+        }
+
+        WebRtcAudioUtils.setWebRtcBasedAutomaticGainControl(false);
+        if (!WebRtcAudioUtils.isAutomaticGainControlSupported()) {
+            Preference disableBuiltInAGCPreference =
+                    settingsFragment.findPreference(keyprefDisableBuiltInAGC);
+
+            disableBuiltInAGCPreference.setSummary(getString(R.string.pref_built_in_agc_not_available));
+            disableBuiltInAGCPreference.setEnabled(false);
+        }
+
+        WebRtcAudioUtils.setWebRtcBasedNoiseSuppressor(false);
+        if (!WebRtcAudioUtils.isNoiseSuppressorSupported()) {
+            Preference disableBuiltInNSPreference =
+                    settingsFragment.findPreference(keyprefDisableBuiltInNS);
+
+            disableBuiltInNSPreference.setSummary(getString(R.string.pref_built_in_ns_not_available));
+            disableBuiltInNSPreference.setEnabled(false);
+        }
     }
 
     @Override

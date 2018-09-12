@@ -18,9 +18,7 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.util.Log;
 
-
 import com.arif.friendchat.web_rtc.util.AppRTCUtils;
-
 import org.webrtc.ThreadUtils;
 
 /**

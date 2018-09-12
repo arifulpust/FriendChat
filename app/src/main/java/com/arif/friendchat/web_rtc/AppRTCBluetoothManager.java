@@ -26,9 +26,7 @@ import android.os.Looper;
 import android.os.Process;
 import android.util.Log;
 
-
 import com.arif.friendchat.web_rtc.util.AppRTCUtils;
-
 import org.webrtc.ThreadUtils;
 
 import java.util.List;

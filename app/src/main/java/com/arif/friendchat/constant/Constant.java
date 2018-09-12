@@ -9,6 +9,7 @@ public class Constant {
     public static int SPLASH_TIME=2000;
     public static String Token;
     public static String ROOMID="room_id";
+    public static String NAME="name";
     public static String FROM="from";
     public static String USER_NAME="user_name";
     public static String CALL_USER="call_user";

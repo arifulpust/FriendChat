@@ -43,6 +43,8 @@ import com.arif.friendchat.Utils.ColorTheme;
 import com.arif.friendchat.Utils.CorrectSizeUtil;
 import com.arif.friendchat.constant.AppData;
 import com.arif.friendchat.constant.Constant;
+import com.arif.friendchat.web_rtc.ConnectActivity;
+import com.arif.friendchat.web_rtc.SettingsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -163,6 +165,8 @@ List<User>users=new ArrayList<>();
     public void setting()
     {
         signOut();
+//        Intent   intent = new Intent(MainActivity.this, SettingsActivity.class);
+//        startActivity(intent);
     }
     @OnClick(R.id.btn_footer_home)
     public void showHomeFragment() {

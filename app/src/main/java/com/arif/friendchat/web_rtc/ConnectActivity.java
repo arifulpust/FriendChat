@@ -36,11 +36,11 @@ import android.widget.TextView;
 
 import com.arif.friendchat.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.Random;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 /**
  * Handles the initial setup where the user selects which room to join.
@@ -52,6 +52,7 @@ public class ConnectActivity extends Activity {
     private static boolean commandLineRun = false;
 
     private ImageButton addFavoriteButton;
+    private TextView room_edittext_description;
     private EditText roomEditText;
     private ListView roomListView;
     private SharedPreferences sharedPref;
@@ -70,7 +71,7 @@ public class ConnectActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+    //    setTheme(android.R.style.Theme);
         // Get setting keys.
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -97,8 +98,11 @@ public class ConnectActivity extends Activity {
                 return false;
             }
         });
+
+
         roomEditText.requestFocus();
 
+        room_edittext_description = findViewById(R.id.room_edittext_description);
         roomListView = findViewById(R.id.room_listview);
         roomListView.setEmptyView(findViewById(android.R.id.empty));
         roomListView.setOnItemClickListener(roomListClickListener);
@@ -118,6 +122,9 @@ public class ConnectActivity extends Activity {
             String room = sharedPref.getString(keyprefRoom, "");
             connectToRoom(room, true, loopback, useValuesFromIntent, runTimeMs);
         }
+
+
+
     }
 
     @Override

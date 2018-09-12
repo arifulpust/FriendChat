@@ -22,10 +22,8 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-
 import com.arif.friendchat.R;
 import com.arif.friendchat.web_rtc.util.AppRTCUtils;
-
 import org.webrtc.ThreadUtils;
 
 import java.util.Collections;
@@ -127,16 +125,16 @@ public class AppRTCAudioManager {
 
         // The proximity sensor should only be activated when there are exactly two
         // available audio devices.
-        if (audioDevices.size() == 2 && audioDevices.contains(AppRTCAudioManager.AudioDevice.EARPIECE)
-                && audioDevices.contains(AppRTCAudioManager.AudioDevice.SPEAKER_PHONE)) {
+        if (audioDevices.size() == 2 && audioDevices.contains(AudioDevice.EARPIECE)
+                && audioDevices.contains(AudioDevice.SPEAKER_PHONE)) {
             if (proximitySensor.sensorReportsNearState()) {
                 // Sensor reports that a "handset is being held up to a person's ear",
                 // or "something is covering the light sensor".
-                setAudioDeviceInternal(AppRTCAudioManager.AudioDevice.EARPIECE);
+                setAudioDeviceInternal(AudioDevice.EARPIECE);
             } else {
                 // Sensor reports that a "handset is removed from a person's ear", or
                 // "the light sensor is no longer covered".
-                setAudioDeviceInternal(AppRTCAudioManager.AudioDevice.SPEAKER_PHONE);
+                setAudioDeviceInternal(AudioDevice.SPEAKER_PHONE);
             }
         }
     }

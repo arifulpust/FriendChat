@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.webrtc.IceCandidate;
+import org.webrtc.PeerConnection;
 import org.webrtc.SessionDescription;
 
 import java.util.LinkedList;
