@@ -125,39 +125,7 @@ List<User>users=new ArrayList<>();
         CorrectSizeUtil.getInstance(this).correctSize(findViewById(R.id.root));
         unbinder= ButterKnife.bind(this);
         clickFooter(1);
-        //   pager.setPageTransformer(false, new NoPageTransformer());
-//        pager.setPageTransformer(true, new ViewPager.PageTransformer() {
-//            @Override
-//            public void transformPage(@NonNull View page, float position) {
-//
-//                Log.e("transformPage",position+"");
-//                page.setRotationY(position * -30);
-//            }
-//        });
-      //  toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        auth = FirebaseAuth.getInstance();
-//        setSupportActionBar(toolbar);
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setTitle("Home");
-//        }
-       // mFirebaseDatabase=mFirebaseDatabase.child(Token);
-
-//        Log.e("auth",""+gson.toJson(auth.getUid()));
-//
-//        userListAdapter = new UserListAdapter(getApplicationContext(), users);
-//        user_list.setAdapter(userListAdapter);
-//        user_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent=new Intent(MainActivity.this,ChatActivity.class);
-//                intent.putExtra("user",users.get(position));
-//                startActivity(intent);
-//            }
-//        });
-//        auth = FirebaseAuth.getInstance();
-//
-//        getAllUer();
-//        getToken();
+       auth = FirebaseAuth.getInstance();
     }
 
     private final String KEY_FRAGMENT_LIST = "fragmentlist";
@@ -370,6 +338,11 @@ private void getAllUer() {
     public void signOut() {
         AppData.Clear(getApplicationContext());
         auth.signOut();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override

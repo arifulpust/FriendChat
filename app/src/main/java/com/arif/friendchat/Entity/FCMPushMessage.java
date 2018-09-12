@@ -6,5 +6,6 @@ public class FCMPushMessage implements Serializable{
 
     public String to;
     public Data data;
+    public User user;
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.arif.friendchat">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -7,6 +8,14 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:name=".Utils.MyApp"
@@ -15,12 +24,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        tools:ignore="HardcodedDebugMode"
         android:theme="@style/AppTheme">
         <activity android:name=".View.SpashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https" android:host="appr.tc"/>
+                <data android:scheme="http" android:host="appr.tc"/>
             </intent-filter>
         </activity>
         <activity android:name=".View.LoginActivity" />
@@ -37,7 +55,25 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".View.SettingActivity"></activity>
+        <activity android:name=".View.PushActivity" />
+        <activity android:name=".View.SettingActivity" />
+
+        <receiver
+            android:name=".Receiver.InlineReplyReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".View.AudionVideoChattingActivity"></activity>
+        <activity android:name=".web_rtc.ConnectActivity"
+            android:label="@string/settings_name">
+        </activity>
+
+        <activity android:name=".web_rtc.CallActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="fullUser"
+            android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

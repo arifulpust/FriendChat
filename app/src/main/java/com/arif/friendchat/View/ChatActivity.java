@@ -1,5 +1,6 @@
 package com.arif.friendchat.View;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,10 +22,12 @@ import com.arif.friendchat.Entity.FCMPushMessage;
 import com.arif.friendchat.R;
 import com.arif.friendchat.Entity.User;
 import com.arif.friendchat.Utils.CorrectSizeUtil;
+import com.arif.friendchat.constant.Account;
 import com.arif.friendchat.constant.AppData;
 import com.arif.friendchat.constant.Constant;
 import com.arif.friendchat.Interface.DataController;
 import com.arif.friendchat.Utils.RemoteDataController;
+import com.arif.friendchat.web_rtc.ConnectActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
@@ -54,22 +57,26 @@ ImageView audio,video;
     //MessageAdapter messageAdapter;
     ChatAdapter messageAdapter;
     User user;
+    User my_info;
     RecyclerView list_of_messages;
     List<ChatMessage>messages=new ArrayList<>();
     Gson gson=new Gson();
     String email;
     Unbinder unbinder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         unbinder= ButterKnife.bind(this);
-        CorrectSizeUtil.getInstance(this).correctSize(findViewById(R.id.root));
+        CorrectSizeUtil.getInstance(this).correctSize();
         audio=(ImageView)findViewById(R.id.audio);
         video=(ImageView)findViewById(R.id.video);
         message = (EditText)findViewById(R.id.input);
         list_of_messages = (RecyclerView) findViewById(R.id.list_of_messages);
         user=(User)getIntent().getSerializableExtra("user");
+        Account.initializeUserInfo(getApplicationContext());
+        my_info= Account.user;
         email=AppData.getData(AppData.email,getApplicationContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         list_of_messages.setHasFixedSize(true);
@@ -118,10 +125,11 @@ Log.e("user",""+gson.toJson(user));
         fcmPushMessage.to=user.token;
  Data data=new Data();
  data.message="hi am calling you";
- data.type="video_call";
+ data.type=Constant.VIDEO_CHAT;
+ data.user=user;
         fcmPushMessage.data= data;
         Log.e("FCMPushMessage",""+gson.toJson(fcmPushMessage));
-        remoteDataController.FCMPushMessage(Constant.FCM_URL,fcmPushMessage,100);
+        remoteDataController.FCMPushMessage(Constant.FCM_URL,fcmPushMessage,101);
     }
     @OnClick(R.id.audio)
     public void audioCall()
@@ -132,8 +140,9 @@ Log.e("user",""+gson.toJson(user));
         fcmPushMessage.to=user.token;
         Data data=new Data();
         data.message="hi am calling you";
-        data.type="audio_call";
+        data.type=Constant.AUDION_CHAT;
         fcmPushMessage.data= data;
+        fcmPushMessage.user= user;
         Log.e("FCMPushMessage",""+gson.toJson(fcmPushMessage));
         remoteDataController.FCMPushMessage(Constant.FCM_URL,fcmPushMessage,100);
     }
@@ -181,7 +190,27 @@ Log.e("values",""+values);
 
     @Override
     public void DataReceivedFromDataController(String response, int tag) {
-Log.e("DataReceivedFromData",""+response);
+
+        if(tag==100)
+        {
+          //  Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
+            Intent intent=new Intent(ChatActivity.this,ConnectActivity.class);
+            intent.putExtra(Constant.CHAT_TYPE,Constant.AUDION_CHAT);
+
+            intent.putExtra(Constant.ROOMID,my_info.Uid);
+            intent.putExtra(Constant.FROM,"me");
+            startActivity(intent);
+        }else if(tag==101)
+        {
+           // Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
+            Intent intent=new Intent(ChatActivity.this,ConnectActivity.class);
+            intent.putExtra(Constant.CHAT_TYPE,Constant.VIDEO_CHAT);
+            intent.putExtra(Constant.ROOMID,my_info.Uid);
+            intent.putExtra(Constant.FROM,"me");
+            startActivity(intent);
+        }
+
+Log.e("DataReceivedFromData",tag+"---"+response);
     }
 
     @Override

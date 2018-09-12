@@ -12,7 +12,7 @@ import android.util.Log;
 public class AppData {
 
     //keys
-    public static String employeeInfo = "employee";
+    public static String user_info = "user_info";
     public static String email = "email";
     public static String Acess_Toten = "Acess_Toten";
     public static String deviceToken = "deviceToken";

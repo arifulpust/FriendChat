@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.arif.friendchat.Entity.User;
 import com.arif.friendchat.R;
 import com.arif.friendchat.Utils.CorrectSizeUtil;
 import com.arif.friendchat.constant.AppData;
@@ -62,7 +63,8 @@ Gson gson=new Gson();
 
         // set the view now
         setContentView(R.layout.activity_login);
-        CorrectSizeUtil.getInstance(this).correctSize(findViewById(R.id.root));
+       CorrectSizeUtil.getInstance(this).correctSize();
+
         unbinder= ButterKnife.bind(this);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("users");
@@ -124,6 +126,12 @@ public void login()
                 }
             });
 }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -162,8 +170,9 @@ private void updateToken(final String token)
             for (DataSnapshot ds : dataSnapshot.getChildren())
             {
                 keyValue= ds.getKey().toString();
-
-                Log.e("ds",keyValue+"\n"+ds);
+                User user = ds.getValue(User.class);
+                AppData.saveData(AppData.user_info,gson.toJson(user),getApplicationContext());
+                Log.e("ds",keyValue+"\n"+ds.getValue());
             }
             try {
 

@@ -104,6 +104,7 @@ Log.e("MessageListFragment","call");
     private void getAllUer() {
 
         email = AppData.getData(AppData.email, getActivity());
+
         mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
