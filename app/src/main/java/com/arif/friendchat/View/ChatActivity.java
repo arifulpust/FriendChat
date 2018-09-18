@@ -1,5 +1,6 @@
 package com.arif.friendchat.View;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,10 +43,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class ChatActivity extends AppCompatActivity implements DataController{
 RemoteDataController remoteDataController;
@@ -54,6 +58,7 @@ ImageView audio,video;
     private DatabaseReference chatMessage_2;
     private FirebaseDatabase mFirebaseInstance;
     EditText message;
+    private static final int RC_CALL = 111;
     //MessageAdapter messageAdapter;
     ChatAdapter messageAdapter;
     User user;
@@ -63,7 +68,7 @@ ImageView audio,video;
     Gson gson=new Gson();
     String email;
     Unbinder unbinder;
-
+    Data data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +110,34 @@ Log.e("user",""+gson.toJson(user));
        // https://github.com/hieuapp/android-firebase-chat.git
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        try {
+            EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+    @AfterPermissionGranted(RC_CALL)
+    private void connect(String Type) {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            if(Type.equals(Constant.AUDION_CHAT))
+            {
+                audioCallRequest();
+            }
+         else
+            {
+                vidioCallRequest();
+            }
+        } else {
+            EasyPermissions.requestPermissions(this, "Need some permissions", RC_CALL, perms);
+        }
+    }
     String userEmail;
     private void initializer() {
          userEmail= AppData.getData(AppData.email,getApplicationContext());
@@ -119,32 +152,53 @@ Log.e("user",""+gson.toJson(user));
     @OnClick(R.id.video)
     public void videoCall()
     {
-        RemoteDataController remoteDataController=new RemoteDataController(this,getApplicationContext());
+        connect(Constant.VIDEO_CHAT);
 
-        FCMPushMessage fcmPushMessage=new FCMPushMessage();
-        fcmPushMessage.to=user.token;
- Data data=new Data();
- data.message="hi am calling you";
- data.type=Constant.VIDEO_CHAT;
- data.user=user;
-        fcmPushMessage.data= data;
-        Log.e("FCMPushMessage",""+gson.toJson(fcmPushMessage));
-        remoteDataController.FCMPushMessage(Constant.FCM_URL,fcmPushMessage,101);
     }
-    @OnClick(R.id.audio)
-    public void audioCall()
+    private void audioCallRequest()
     {
         RemoteDataController remoteDataController=new RemoteDataController(this,getApplicationContext());
 
         FCMPushMessage fcmPushMessage=new FCMPushMessage();
-        fcmPushMessage.to=user.token;
-        Data data=new Data();
+        data=new Data();
         data.message="hi am calling you";
         data.type=Constant.AUDION_CHAT;
+        data.channel=getChannelNumber();
+        data.user=user;
+
         fcmPushMessage.data= data;
-        fcmPushMessage.user= user;
+        fcmPushMessage.to= user.token;
         Log.e("FCMPushMessage",""+gson.toJson(fcmPushMessage));
+
+
         remoteDataController.FCMPushMessage(Constant.FCM_URL,fcmPushMessage,100);
+    }
+    private void vidioCallRequest()
+    {
+
+        RemoteDataController remoteDataController=new RemoteDataController(this,getApplicationContext());
+        FCMPushMessage fcmPushMessage=new FCMPushMessage();
+        data=new Data();
+        data.message="hi am calling you";
+        data.type=Constant.VIDEO_CHAT;
+        data.channel=getChannelNumber();
+        data.user=user;
+        fcmPushMessage.data= data;
+        fcmPushMessage.to= user.token;
+        Log.e("FCMPushMessage",""+gson.toJson(fcmPushMessage));
+        remoteDataController.FCMPushMessage(Constant.FCM_URL,fcmPushMessage,101);
+    }
+    private String getChannelNumber()
+    {
+        Random rand = new Random();
+
+        int  n = rand.nextInt(10000000) + 1;
+        return ("arif"+n);
+    }
+    @OnClick(R.id.audio)
+    public void audioCall()
+    {
+        connect(Constant.AUDION_CHAT);
     }
     //audio
 private void createChatMessage()
@@ -195,18 +249,13 @@ Log.e("values",""+values);
         {
           //  Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
             Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
-            intent.putExtra(Constant.CHAT_TYPE,Constant.AUDION_CHAT);
-
-            intent.putExtra(Constant.ROOMID,user.Uid);
-            intent.putExtra(Constant.FROM,my_info.name);
+            intent.putExtra(Constant.PUST_DATA,data);
             startActivity(intent);
         }else if(tag==101)
         {
            // Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
             Intent intent=new Intent(ChatActivity.this,AudionVideoChattingActivity.class);
-            intent.putExtra(Constant.CHAT_TYPE,Constant.VIDEO_CHAT);
-            intent.putExtra(Constant.ROOMID,user.Uid);
-            intent.putExtra(Constant.FROM,my_info.name);
+            intent.putExtra(Constant.PUST_DATA,data);
             startActivity(intent);
         }
 

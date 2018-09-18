@@ -13,11 +13,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.URLUtil;
 
+import com.arif.friendchat.Entity.Data;
 import com.arif.friendchat.Entity.User;
 import com.arif.friendchat.R;
+import com.arif.friendchat.constant.Account;
 import com.arif.friendchat.constant.Constant;
 import com.arif.friendchat.web_rtc.CallActivity;
 import com.arif.friendchat.web_rtc.ConnectActivity;
+import com.google.gson.Gson;
 
 import java.util.Random;
 
@@ -25,7 +28,7 @@ import java.util.Random;
 public class AudionVideoChattingActivity extends AppCompatActivity {
     private static final int CONNECTION_REQUEST = 1;
     private static final int RC_CALL = 111;
-    String roomID;
+
     String chatType;
     String from;
     User user;
@@ -37,20 +40,21 @@ public class AudionVideoChattingActivity extends AppCompatActivity {
     private String keyprefAudioBitrateType;
     private String keyprefAudioBitrateValue;
     private String keyprefRoomServerUrl;
-    private String keyprefRoom;
-    private String keyprefRoomList;
     private static final String TAG = "AudionVideoChattin";
-    private String stdByChannel;
+    Gson gson=new Gson();
+    Data push_data=new Data();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audion_video_chatting);
-        from = getIntent().getStringExtra(Constant.FROM);
-        roomID = getIntent().getStringExtra(Constant.ROOMID);
-        chatType = getIntent().getStringExtra(Constant.CHAT_TYPE);
 
 
-
+        Bundle b = getIntent().getExtras();
+        if(b != null)
+        {
+            push_data = (Data) b.getSerializable(Constant.PUST_DATA);
+        }
+        Log.e(TAG,gson.toJson(push_data));
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         keyprefResolution = getString(R.string.pref_resolution_key);
@@ -60,9 +64,9 @@ public class AudionVideoChattingActivity extends AppCompatActivity {
         keyprefAudioBitrateType = getString(R.string.pref_startaudiobitrate_key);
         keyprefAudioBitrateValue = getString(R.string.pref_startaudiobitratevalue_key);
         keyprefRoomServerUrl = getString(R.string.pref_room_server_url_key);
-        keyprefRoom = getString(R.string.pref_room_key);
-        keyprefRoomList = getString(R.string.pref_room_list_key);
-        if (from.equals("me")) {
+        Account.initializeUserInfo(getApplicationContext());
+      User  my_info= Account.user;
+        if (push_data.user.Uid.equals(my_info.Uid)) {
             Log.e("AudionVideoChattingA","outGoingCall");
             outGoingCall();
         }else
@@ -84,13 +88,13 @@ public class AudionVideoChattingActivity extends AppCompatActivity {
 
     private void inCommingCall()
 {
-    connectToRoom(roomID,from,false,false,false,0);
+    connectToRoom(push_data.channel,push_data.user.name,false,false,false,0);
 
 }
     private void outGoingCall()
     {
 
-        connectToRoom(roomID,from,false,false,false,0);
+        connectToRoom(push_data.channel,push_data.user.name,false,false,false,0);
 
     }
 

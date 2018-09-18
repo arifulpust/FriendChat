@@ -35,7 +35,7 @@ import org.webrtc.ThreadUtils;
  * All events are dispatched on the same thread.
  */
 public class TCPChannelClient {
-    private static final String TAG = "TCPChannelClient";
+    private static final String TAG = "TCPChannelClient_tst";
 
     private final ExecutorService executor;
     private final ThreadUtils.ThreadChecker executorThreadCheck;

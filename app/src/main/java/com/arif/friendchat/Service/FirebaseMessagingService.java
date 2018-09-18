@@ -18,8 +18,9 @@ import com.arif.friendchat.Entity.Data;
 import com.arif.friendchat.Entity.FCMPushMessage;
 import com.arif.friendchat.Entity.User;
 import com.arif.friendchat.R;
-import com.arif.friendchat.Receiver.InlineReplyReceiver;
+
 import com.arif.friendchat.View.AudionVideoChattingActivity;
+import com.arif.friendchat.View.IncomingCallActivity;
 import com.arif.friendchat.View.PushActivity;
 import com.arif.friendchat.constant.Constant;
 import com.google.firebase.messaging.RemoteMessage;
@@ -34,6 +35,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private static final String TAG = "FCM Service";
     public Context context = this;
 Gson gson=new Gson();
+   public User user;
     // flag for network status
     public  String Tag="FirebaseMessagingService";
 
@@ -53,7 +55,7 @@ Gson gson=new Gson();
                 String user_str=object.getString("user");
                 String message=object.getString("message");
                 String type=object.getString("type");
-                User user=gson.fromJson(user_str,User.class);
+                user=gson.fromJson(user_str,User.class);
                 data.user=user;
                 data.type=type;
                 data.message=message;
@@ -74,13 +76,12 @@ Gson gson=new Gson();
     }
 
     private PendingIntent getClickIntent(Data data) {
-        Intent intent = new Intent(this, AudionVideoChattingActivity.class);
-        intent.putExtra(Constant.ROOMID, data.user.Uid);
+        Intent intent = new Intent(this, IncomingCallActivity.class);
+        intent.putExtra(Constant.ROOMID, data.channel);
 
         intent.putExtra(Constant.CHAT_TYPE, data.type);
         intent.putExtra(Constant.FROM, data.user.name);
 
-        intent.putExtra(InlineReplyReceiver.KEY_MESSAGE_ID, data.message);
 
         //intent.putExtra(PushActivity.class.getSimpleName(), room);
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
@@ -89,9 +90,11 @@ Gson gson=new Gson();
     }
 
     private void postNormalNotification(Data  data, int notiID) {
+
         Notification n = new NotificationCompat.Builder(this)
                 .setContentTitle(data.type)
                 .setContentText(data.message)
+                .setContentIntent(getClickIntent(data))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(data.message))
                 .setSmallIcon(R.mipmap.ic_launcher)
                // .setContentIntent(getClickIntent(room))
@@ -113,19 +116,11 @@ Gson gson=new Gson();
     private void postHistoryNotification(Data data, int notiID, boolean isReply) {
 
 
-//        String replyLabel = "reply";
-//        android.app.RemoteInput remoteInput = new android.app.RemoteInput.Builder(InlineReplyReceiver.KEY_REPLY)
-//                .setLabel(replyLabel)
-//                .build();
 
-        Intent intent = new Intent(this, AudionVideoChattingActivity.class);
-        //intent.setAction(Constant.ROOMID);
-        intent.putExtra(Constant.ROOMID, data.user.Uid);
+        Intent intent = new Intent(this, IncomingCallActivity.class);
 
-        intent.putExtra(Constant.CHAT_TYPE, data.type);
-        intent.putExtra(Constant.FROM, data.user.name);
 
-        intent.putExtra(InlineReplyReceiver.KEY_MESSAGE_ID, data.message);
+        intent.putExtra(Constant.PUST_DATA, data);
         PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), (int) System.currentTimeMillis() % 2000000000, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -137,6 +132,7 @@ Gson gson=new Gson();
                 .setSmallIcon(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? R.drawable.chat : R.drawable.chat)
 
                 .setContentTitle(data.type)
+                .setContentIntent(pIntent)
                 .setContentText(data.message)
                 .setContentIntent(getClickIntent(data))
                 .setStyle(ibs)
@@ -155,15 +151,6 @@ Gson gson=new Gson();
             mBuilder.setChannelId("room");
         }
 
-//        if (isReply) { // API >= 24
-//            Notification.Action replyAction = new Notification.Action.Builder(
-//                    R.drawable.chat, replyLabel, pIntent)
-//                    .addRemoteInput(remoteInput)
-//                    .setAllowGeneratedReplies(true)
-//                    .build();
-//            mBuilder.addAction(replyAction); // reply action from step b above
-//        }
-
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -181,39 +168,8 @@ Gson gson=new Gson();
 
     }
 
-    public static final int NOTIFICATION_JOB_CONSULT_ID = -1;
-    public static final int NOTIFICATION_LIVING_ID = -2;
-    public static final int NOTIFICATION_BUILDING_GROUP = -3;
 
-    public static int parseRoomChatToNotificationID(String from) {
-        // userxxx_staffxxx, userxxx_job-consult, userxxx_living
-        int res = 0;
-        try {
-            final String staff = "staff";
-            if (from.contains(staff)) {
-                String id = from.substring(from.indexOf(staff) + staff.length(), from.length());
-                res = Integer.parseInt(id);
-            } else if (from.contains("living")) {
-                return NOTIFICATION_LIVING_ID;
-            } else if (from.contains("consult")) {
-                return NOTIFICATION_JOB_CONSULT_ID;
-            }else if (from.contains("building")) {
-                return NOTIFICATION_BUILDING_GROUP;
-            } else {
-                // case unknown
-                res = -(int) (System.currentTimeMillis() % 2000000000) - 4; // <= -4 meaning unknown, then make stand alone notification
-            }
-        } catch (Exception e) {
-            res = -(int) (System.currentTimeMillis() % 2000000000) - 4; // <= -4 meaning unknown, then make stand alone notification
-        }
-        return res;
-    }
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+
 
 
 }

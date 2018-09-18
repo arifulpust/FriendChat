@@ -57,6 +57,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
+import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +127,7 @@ List<User>users=new ArrayList<>();
         Token=AppData.getData(Constant.Token,getApplicationContext());
         CorrectSizeUtil.getInstance(this).correctSize(findViewById(R.id.root));
         unbinder= ButterKnife.bind(this);
+      //  RippleBackground
         clickFooter(1);
        auth = FirebaseAuth.getInstance();
     }

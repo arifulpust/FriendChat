@@ -59,10 +59,7 @@
         <activity android:name=".View.PushActivity" />
         <activity android:name=".View.SettingActivity" />
 
-        <receiver
-            android:name=".Receiver.InlineReplyReceiver"
-            android:enabled="true"
-            android:exported="false" />
+
 
         <activity android:name=".View.AudionVideoChattingActivity"></activity>
         <activity android:name=".web_rtc.ConnectActivity"

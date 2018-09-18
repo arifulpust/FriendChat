@@ -11,10 +11,14 @@ public class Constant {
     public static String ROOMID="room_id";
     public static String NAME="name";
     public static String FROM="from";
+    public static String PUST_DATA="push_data";
     public static String USER_NAME="user_name";
     public static String CALL_USER="call_user";
     public static String AUDION_CHAT="audio";
     public static String VIDEO_CHAT="video";
+    public static String PUST_TYPE="push_type";
+    public static String REJECT="reject";
+
     public static String CHAT_TYPE="chat_type";
     public static final String STDBY_SUFFIX = "-stdby";
 
